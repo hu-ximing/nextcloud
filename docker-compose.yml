@@ -30,6 +30,15 @@ services:
       - nextcloud_admin_user
     ports:
       - 127.0.0.1:8001:80
+  
+  cron:
+    image: nextcloud:apache
+    restart: always
+    volumes:
+      - nc_data:/var/www/html
+    entrypoint: /cron.sh
+    depends_on:
+      - db
 
 volumes:
   db_data:
