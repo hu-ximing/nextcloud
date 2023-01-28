@@ -83,4 +83,4 @@ Enable `HTTP Strict Transport Security (HSTS)`
 
 In cloudflare, go to SSL/TLS, Edge Certificates.
 
-![HSTS](https://cloud.minglab.top/s/ogRQKHCYMfHbJgy/preview)
+![HSTS](https://www.minglab.top/projects/nextcloud/HSTS.png)
