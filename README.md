@@ -74,7 +74,7 @@ docker compose down
 > Your installation has no default phone region set. This is required to validate phone numbers in the profile settings without a country code. To allow numbers without a country code, please add "default_phone_region" with the respective ISO 3166-1 code of the region to your config file.
 
 ```shell
-docker compose exec --user www-data nc php occ config:system:set default_phone_region --value="US"
+docker compose exec --user www-data app php occ config:system:set default_phone_region --value="US"
 ```
 
 > The "Strict-Transport-Security" HTTP header is not set to at least "15552000" seconds. For enhanced security, it is recommended to enable HSTS as described in the security tips.

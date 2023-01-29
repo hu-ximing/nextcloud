@@ -6,6 +6,8 @@ services:
       - db:/var/lib/postgresql/data
     env_file:
       - ./env/db.env
+    secrets:
+      - postgres_password
 
   redis:
     image: redis:alpine
@@ -25,8 +27,9 @@ services:
       - NEXTCLOUD_ADMIN_USER_FILE=/run/secrets/nextcloud_admin_user
       - NEXTCLOUD_TRUSTED_DOMAINS=cloud.minglab.top
       - PHP_MEMORY_LIMIT=512M
-      - PHP_UPLOAD_LIMIT=512M
-      - OVERWRITEHOST=cloud.minglab.top
+      - PHP_UPLOAD_LIMIT=1G
+      - APACHE_DISABLE_REWRITE_IP=1
+      - TRUSTED_PROXIES=localhost
       - OVERWRITEPROTOCOL=https
     env_file:
       - ./env/db.env
@@ -36,6 +39,7 @@ services:
     secrets:
       - nextcloud_admin_password
       - nextcloud_admin_user
+      - postgres_password
 
   cron:
     image: nextcloud:apache
@@ -57,3 +61,5 @@ secrets:
     file: ./env/nextcloud_admin_password.txt
   nextcloud_admin_user:
     file: ./env/nextcloud_admin_user.txt
+  postgres_password:
+    file: ./env/postgres_password.txt
