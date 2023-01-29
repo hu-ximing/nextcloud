@@ -3,17 +3,24 @@ services:
     image: postgres:alpine
     restart: always
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     env_file:
       - ./env/db.env
 
-  nc:
+  redis:
+    image: redis:alpine
+    restart: always
+
+  app:
     image: nextcloud:apache
     restart: always
+    ports:
+      - 127.0.0.1:8001:80
     volumes:
-      - nc_data:/var/www/html
+      - nextcloud:/var/www/html
     environment:
       - POSTGRES_HOST=db
+      - REDIS_HOST=redis
       - NEXTCLOUD_ADMIN_PASSWORD_FILE=/run/secrets/nextcloud_admin_password
       - NEXTCLOUD_ADMIN_USER_FILE=/run/secrets/nextcloud_admin_user
       - NEXTCLOUD_TRUSTED_DOMAINS=cloud.minglab.top
@@ -25,24 +32,24 @@ services:
       - ./env/db.env
     depends_on:
       - db
+      - redis
     secrets:
       - nextcloud_admin_password
       - nextcloud_admin_user
-    ports:
-      - 127.0.0.1:8001:80
-  
+
   cron:
     image: nextcloud:apache
     restart: always
     volumes:
-      - nc_data:/var/www/html
+      - nextcloud:/var/www/html
     entrypoint: /cron.sh
     depends_on:
       - db
+      - redis
 
 volumes:
-  db_data:
-  nc_data:
+  db:
+  nextcloud:
 
 
 secrets:
