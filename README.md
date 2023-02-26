@@ -35,18 +35,6 @@ server {
 
 ## Editing configurations
 
-- `env/db.env`
-  
-  pass a value to `POSTGRES_PASSWORD`
-
-- `env/nextcloud_admin_user.txt`
-  
-  enter nextcloud admin username
-
-- `env/nextcloud_admin_password.txt`
-  
-  enter nextcloud admin password
-
 - `docker-compose.yml`
   
   replace `cloud.minglab.top` to desired domain name
